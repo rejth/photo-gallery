@@ -1,9 +1,25 @@
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
-  font-feature-settings: "locl"0;
-  font-family: Open Sans, sans-serif;
 }
 
-h1, h2, h3, p {
-  margin: 0
-};
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: helvetica;
+  position: relative;
+  font-size: 100%;
+  background: #d1913c;
+  background: -webkit-linear-gradient(to right, #ffd194, #d1913c);
+  background: linear-gradient(to right, #ffd194, #d1913c);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
