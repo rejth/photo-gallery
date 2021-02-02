@@ -17,6 +17,12 @@ export default class GalleryModal extends Component {
     if (e.keyCode === 39 && this.props.hasNext) this.props.findNext();
   };
 
+  handleClickOutsideModal = e => {
+    if (e.target.matches('.modal-overlay')) {
+      this.props.closeModal();
+    }
+  };
+
   render() {
     const {
       closeModal,
@@ -28,40 +34,38 @@ export default class GalleryModal extends Component {
     } = this.props;
 
     return (
-      <div>
-        <div className="modal-overlay">
-          <div className="modal-window">
-            <div className="modal-body">
-              <img src={src} />
+      <div className="modal-overlay" onClick={this.handleClickOutsideModal}>
+        <div className="modal-window">
+          <div className="modal-body">
+            <img src={src} />
+            <a
+              href="#"
+              className="modal-close"
+              onClick={closeModal}
+              onKeyDown={this.handleKeyDown}
+            >
+              &times;
+            </a>
+            {hasPrev && (
               <a
                 href="#"
-                className="modal-close"
-                onClick={closeModal}
+                className="modal-prev"
+                onClick={findPrev}
                 onKeyDown={this.handleKeyDown}
               >
-                &times;
+                &lsaquo;
               </a>
-              {hasPrev && (
-                <a
-                  href="#"
-                  className="modal-prev"
-                  onClick={findPrev}
-                  onKeyDown={this.handleKeyDown}
-                >
-                  &lsaquo;
-                </a>
-              )}
-              {hasNext && (
-                <a
-                  href="#"
-                  className="modal-next"
-                  onClick={findNext}
-                  onKeyDown={this.handleKeyDown}
-                >
-                  &rsaquo;
-                </a>
-              )}
-            </div>
+            )}
+            {hasNext && (
+              <a
+                href="#"
+                className="modal-next"
+                onClick={findNext}
+                onKeyDown={this.handleKeyDown}
+              >
+                &rsaquo;
+              </a>
+            )}
           </div>
         </div>
       </div>
