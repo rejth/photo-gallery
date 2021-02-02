@@ -20,53 +20,48 @@ export default class GalleryModal extends Component {
   render() {
     const {
       closeModal,
-      hasNext,
-      hasPrev,
-      findNext,
       findPrev,
+      findNext,
+      hasPrev,
+      hasNext,
       src,
     } = this.props;
 
-    if (!src) {
-      console.log('whut');
-      console.log(src);
-      return null;
-    }
-
     return (
       <div>
-        <div className="modal-overlay" onClick={closeModal}></div>
-        <div isopen={src ? 1 : 0} className="modal">
-          <div className="modal-body">
-            <a
-              href="#"
-              className="modal-close"
-              onClick={closeModal}
-              onKeyDown={this.handleKeyDown}
-            >
-              &times;
-            </a>
-            {hasPrev && (
+        <div className="modal-overlay">
+          <div className="modal-window">
+            <div className="modal-body">
+              <img src={src} />
               <a
                 href="#"
-                className="modal-prev"
-                onClick={findPrev}
+                className="modal-close"
+                onClick={closeModal}
                 onKeyDown={this.handleKeyDown}
               >
-                &lsaquo;
+                &times;
               </a>
-            )}
-            {hasNext && (
-              <a
-                href="#"
-                className="modal-next"
-                onClick={findNext}
-                onKeyDown={this.handleKeyDown}
-              >
-                &rsaquo;
-              </a>
-            )}
-            <img src={src} />
+              {hasPrev && (
+                <a
+                  href="#"
+                  className="modal-prev"
+                  onClick={findPrev}
+                  onKeyDown={this.handleKeyDown}
+                >
+                  &lsaquo;
+                </a>
+              )}
+              {hasNext && (
+                <a
+                  href="#"
+                  className="modal-next"
+                  onClick={findNext}
+                  onKeyDown={this.handleKeyDown}
+                >
+                  &rsaquo;
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -75,6 +70,7 @@ export default class GalleryModal extends Component {
 }
 
 GalleryModal.propTypes = {
+  modalMode: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   findPrev: PropTypes.func.isRequired,
   findNext: PropTypes.func.isRequired,
