@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GalleryModal from '../GalleryModal';
 import Album from '../Album';
+import Button from '../Button';
 import './App.scss';
 
 export default class App extends Component {
@@ -25,10 +26,14 @@ export default class App extends Component {
     isOpenAlbum: false,
   };
 
-  renderImageContent = arr =>
+  renderAlbumContent = arr =>
     arr.map((src, index) => (
-      <div key={index} onClick={() => this.openModal(index)}>
+      <div key={index}>
         <img src={src} key={index} />
+        <div className="button-block">
+          <Button text={'Аlbum'} onAction={this.openAlbum} />
+          <Button text={'Preview'} onAction={() => this.openModal(index)} />
+        </div>
       </div>
     ));
 
@@ -73,7 +78,7 @@ export default class App extends Component {
   };
 
   render() {
-    const items = this.renderImageContent(this.imgUrls);
+    const items = this.renderAlbumContent(this.imgUrls);
 
     const modal = this.state.isOpenModal ? (
       <GalleryModal

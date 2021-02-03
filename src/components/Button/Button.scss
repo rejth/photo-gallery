@@ -1,0 +1,17 @@
+.gallery-button {
+  padding: 18px;
+  min-width: 160px;
+  min-height: 50px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 15px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  background-color: tomato;
+  transition: transform 500ms ease;
+  &:hover {
+    transform: scale(1.05);
+  }
+}

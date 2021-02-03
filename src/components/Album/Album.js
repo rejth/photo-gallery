@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Button from '../Button';
 import './Album.scss';
 
 export default class Album extends Component {
   render() {
     return <Tiles images={this.props.data} onClose={this.props.closeAlbum} />;
-  }
-}
-
-class Button extends Component {
-  render() {
-    return (
-      <button className="back-button" onClick={this.props.onClose}>
-        Назад
-      </button>
-    );
   }
 }
 
@@ -24,7 +15,7 @@ class Tiles extends Component {
     const images = this.renderImageContent(this.props.images);
     return (
       <div className="tiles">
-        <Button onClose={this.props.onClose} />
+        <Button text={'Back'} onAction={this.props.onClose} />
         {images}
       </div>
     );
@@ -111,11 +102,6 @@ Album.propTypes = {
   closeAlbum: PropTypes.func.isRequired,
   data: PropTypes.array,
   images: PropTypes.array,
-  image: PropTypes.array,
-};
-
-Button.propTypes = {
-  onClose: PropTypes.func,
 };
 
 Tiles.propTypes = {
@@ -124,5 +110,5 @@ Tiles.propTypes = {
 };
 
 Tile.propTypes = {
-  image: PropTypes.array,
+  image: PropTypes.string,
 };

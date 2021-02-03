@@ -15,7 +15,7 @@ $black: #222;
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px;
+  grid-gap: 20px;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -32,26 +32,6 @@ $black: #222;
     transition: 0.3s opacity ease;
     opacity: 0;
   }
-  &:after {
-    content: '\02194';
-    font-size: 80px;
-    position: absolute;
-    transform: translate3d(-50%, -50%, 0) rotate(-45deg);
-    color: #fff;
-    left: 50%;
-    top: 50%;
-    display: block;
-  }
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 4px;
-    left: 0;
-    right: 0;
-    background: rgba(#222, 0.5);
-    display: block;
-  }
   &:hover {
     &:before,
     &:after {
@@ -59,4 +39,9 @@ $black: #222;
       transition: 0.3s opacity ease;
     }
   }
+}
+
+.button-block {
+  display: flex;
+  justify-content: space-between;
 }
