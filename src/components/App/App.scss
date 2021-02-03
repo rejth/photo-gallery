@@ -27,18 +27,6 @@ $black: #222;
 .gallery-grid div {
   position: relative;
   cursor: pointer;
-  &:before,
-  &:after {
-    transition: 0.3s opacity ease;
-    opacity: 0;
-  }
-  &:hover {
-    &:before,
-    &:after {
-      opacity: 1;
-      transition: 0.3s opacity ease;
-    }
-  }
 }
 
 .button-block {

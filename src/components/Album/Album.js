@@ -14,10 +14,10 @@ class Tiles extends Component {
   render() {
     const images = this.renderImageContent(this.props.images);
     return (
-      <div className="tiles">
+      <React.Fragment>
         <Button text={'Back'} onAction={this.props.onClose} />
-        {images}
-      </div>
+        <div className="tiles">{images}</div>
+      </React.Fragment>
     );
   }
 }
@@ -66,11 +66,11 @@ class Tile extends Component {
 
     if (this.state.open) {
       tileStyle = {
-        width: '62vw',
-        height: '62vw',
         position: 'absolute',
         top: '50%',
         left: '50%',
+        width: '62vw',
+        height: '62vw',
         margin: '0',
         marginTop: '-31vw',
         marginLeft: '-31vw',
@@ -79,8 +79,8 @@ class Tile extends Component {
       };
     } else {
       tileStyle = {
-        width: '18vw',
-        height: '18vw',
+        width: '100%',
+        height: '100%',
       };
     }
 
