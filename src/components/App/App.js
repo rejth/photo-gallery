@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GalleryModal from '../GalleryModal';
+import Album from '../Album';
 import './App.scss';
 
 export default class App extends Component {
@@ -20,8 +21,8 @@ export default class App extends Component {
 
   state = {
     currentIndex: null,
-    modalMode: false,
-    albumMode: false,
+    isOpenModal: false,
+    isOpenAlbum: false,
   };
 
   renderImageContent = arr =>
@@ -34,14 +35,28 @@ export default class App extends Component {
   openModal = index => {
     this.setState({
       currentIndex: index,
-      modalMode: true,
+      isOpenModal: true,
+    });
+  };
+
+  openAlbum = index => {
+    this.setState({
+      currentIndex: index,
+      isOpenAlbum: true,
     });
   };
 
   closeModal = () => {
     this.setState({
       currentIndex: null,
-      modalMode: false,
+      isOpenModal: false,
+    });
+  };
+
+  closeAlbum = () => {
+    this.setState({
+      currentIndex: null,
+      isOpenAlbum: false,
     });
   };
 
@@ -60,9 +75,8 @@ export default class App extends Component {
   render() {
     const items = this.renderImageContent(this.imgUrls);
 
-    const modal = this.state.modalMode ? (
+    const modal = this.state.isOpenModal ? (
       <GalleryModal
-        modalMode={this.state.modalMode}
         closeModal={this.closeModal}
         findPrev={this.findPrev}
         findNext={this.findNext}
@@ -72,11 +86,22 @@ export default class App extends Component {
       />
     ) : null;
 
-    return (
-      <div className="gallery-container">
+    const album = this.state.isOpenAlbum ? (
+      <Album closeAlbum={this.closeAlbum} data={this.imgUrls} />
+    ) : null;
+
+    const albumTile = !this.state.isOpenAlbum ? (
+      <React.Fragment>
         <h1>Photo Gallery</h1>
         <div className="gallery-grid">{items}</div>
         {modal}
+      </React.Fragment>
+    ) : null;
+
+    return (
+      <div className="gallery-container">
+        {albumTile}
+        {album}
       </div>
     );
   }

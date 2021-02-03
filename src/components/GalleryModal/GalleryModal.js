@@ -74,7 +74,6 @@ export default class GalleryModal extends Component {
 }
 
 GalleryModal.propTypes = {
-  modalMode: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   findPrev: PropTypes.func.isRequired,
   findNext: PropTypes.func.isRequired,
