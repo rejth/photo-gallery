@@ -12,6 +12,7 @@ export default class App extends Component {
   state = {
     albums: null,
     photos: null,
+    countPhotos: null,
     currentPhotoId: null,
     isOpenModal: false,
     isOpenAlbum: false,
@@ -34,13 +35,21 @@ export default class App extends Component {
       .catch(() => this.setState({ error: true }));
   };
 
+  updateCountPhotos = albumId => {
+    this.fakeApiService
+      .getCountPhotos(albumId)
+      .then(count => this.setState({ countPhotos: count }))
+      .catch(() => this.setState({ error: true }));
+  };
+
   componentDidMount() {
     this.updateAlbumTiles();
   }
 
   renderAlbumTiles(tiles) {
     if (tiles) {
-      return tiles.map(({ src, id, title }) => (
+      return tiles.map(({ src, id, title }) => {
+        this.updateCountPhotos(id);
         <div className="album" key={id}>
           <img
             className="cover-image"
@@ -50,14 +59,14 @@ export default class App extends Component {
           />
           <div className="album-info">
             <span>Альбом: {title}</span>
-            <span>Количество фото: 50</span>
+            <span>Количество фото: {this.state.countPhotos}</span>
           </div>
           <div className="button-block">
             <Button text={'Аlbum'} onAction={() => this.openAlbum(id)} />
             <Button text={'Preview'} onAction={() => this.openModal(id)} />
           </div>
-        </div>
-      ));
+        </div>;
+      });
     }
   }
 
@@ -69,8 +78,8 @@ export default class App extends Component {
   openModal = id => {
     this.updatePhotosList(id);
     this.setState({
-      isOpenModal: true,
       currentPhotoId: id,
+      isOpenModal: true,
     });
   };
 
@@ -114,7 +123,7 @@ export default class App extends Component {
 
     const errorMessage = error ? <ErrorIndicator /> : null;
 
-    const items = this.renderAlbumTiles(albums);
+    const albumItems = this.renderAlbumTiles(albums);
 
     const modal =
       isOpenModal && photos ? (
@@ -136,7 +145,7 @@ export default class App extends Component {
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>
-        <div className="gallery-grid">{items}</div>
+        <div className="gallery-grid">{albumItems}</div>
         {modal}
       </React.Fragment>
     ) : null;

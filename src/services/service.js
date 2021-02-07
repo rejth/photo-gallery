@@ -40,6 +40,12 @@ export default class FakeApiService {
     return photos; // [{}, {}...]
   }
 
+  // получение количества фотографий в альбоме
+  async getCountPhotos(albumId) {
+    const photos = await this.getResource(`/albums/${albumId}/photos`);
+    return photos.length;
+  }
+
   // добавление обложки альбома
   _addCoverImg = item => this._imgUrls[item];
 
