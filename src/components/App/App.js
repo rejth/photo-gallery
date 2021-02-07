@@ -3,13 +3,16 @@ import FakeApiService from '../../services/service';
 import GalleryModal from '../GalleryModal';
 import Album from '../Album';
 import Button from '../Button';
+import ErrorIndicator from '../ErrorIndicator';
 import './App.scss';
 
 export default class App extends Component {
+  _userId = 1;
+
   state = {
     albums: null,
     photos: null,
-    currentAlbumId: null,
+    currentPhotoId: null,
     isOpenModal: false,
     isOpenAlbum: false,
     error: null,
@@ -18,9 +21,8 @@ export default class App extends Component {
   fakeApiService = new FakeApiService();
 
   updateAlbumTiles = () => {
-    const userId = 1;
     this.fakeApiService
-      .getAllAlbums(userId)
+      .getAllAlbums(this._userId)
       .then(albums => this.setState({ albums }))
       .catch(() => this.setState({ error: true }));
   };
@@ -52,24 +54,20 @@ export default class App extends Component {
 
   openAlbum = id => {
     this.updatePhotosList(id);
-    this.setState({
-      currentAlbumId: id,
-      isOpenAlbum: true,
-    });
+    this.setState({ isOpenAlbum: true });
   };
 
   openModal = id => {
     this.updatePhotosList(id);
     this.setState({
-      currentAlbumId: id,
       isOpenModal: true,
+      currentPhotoId: id,
     });
   };
 
   closeAlbum = () => {
     this.setState({
       photos: null,
-      currentAlbumId: null,
       isOpenAlbum: false,
     });
   };
@@ -77,22 +75,21 @@ export default class App extends Component {
   closeModal = () => {
     this.setState({
       photos: null,
-      currentAlbumId: null,
       isOpenModal: false,
     });
   };
 
   findPrevPhoto = e => {
     e.preventDefault();
-    this.setState(({ currentAlbumId }) => ({
-      currentAlbumId: currentAlbumId - 1,
+    this.setState(({ currentPhotoId }) => ({
+      currentPhotoId: currentPhotoId - 1,
     }));
   };
 
   findNextPhoto = e => {
     e.preventDefault();
-    this.setState(({ currentAlbumId }) => ({
-      currentAlbumId: currentAlbumId + 1,
+    this.setState(({ currentPhotoId }) => ({
+      currentPhotoId: currentPhotoId + 1,
     }));
   };
 
@@ -100,29 +97,32 @@ export default class App extends Component {
     const {
       albums,
       photos,
-      currentAlbumId,
+      currentPhotoId,
       isOpenModal,
       isOpenAlbum,
+      error,
     } = this.state;
 
-    console.log(photos);
+    const errorMessage = error ? <ErrorIndicator /> : null;
 
     const items = this.renderAlbumTiles(albums);
 
-    const modal = isOpenModal ? (
-      <GalleryModal
-        closeModal={this.closeModal}
-        findPrevPhoto={this.findPrevPhoto}
-        findNextPhoto={this.findNextPhoto}
-        hasPrevPhoto={currentAlbumId > 0}
-        hasNextPhoto={currentAlbumId + 1 < albums.length}
-        src={albums[currentAlbumId].src}
-      />
-    ) : null;
+    const modal =
+      isOpenModal && photos ? (
+        <GalleryModal
+          closeModal={this.closeModal}
+          findPrevPhoto={this.findPrevPhoto}
+          findNextPhoto={this.findNextPhoto}
+          hasPrevPhoto={currentPhotoId > 0}
+          hasNextPhoto={currentPhotoId + 1 < photos.length}
+          src={photos[currentPhotoId].url}
+        />
+      ) : null;
 
-    const album = isOpenAlbum ? (
-      <Album closeAlbum={this.closeAlbum} data={photos} />
-    ) : null;
+    const album =
+      isOpenAlbum && photos ? (
+        <Album closeAlbum={this.closeAlbum} data={photos} />
+      ) : null;
 
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
@@ -136,6 +136,7 @@ export default class App extends Component {
       <div className="gallery-container">
         {albumTiles}
         {album}
+        {errorMessage}
       </div>
     );
   }
