@@ -21,7 +21,7 @@ export default class App extends Component {
 
   fakeApiService = new FakeApiService();
 
-  // Обновляем плитку альбомов
+  // обновляем плитку альбомов
   updateAlbumTiles = () => {
     this.fakeApiService
       .getAllAlbums(this._userId)
@@ -29,7 +29,7 @@ export default class App extends Component {
       .catch(() => this.setState({ error: true }));
   };
 
-  // Обновляем список фотографий альбома
+  // обновляем список фотографий альбома
   updatePhotosList = albumId => {
     this.fakeApiService
       .getAllPhotos(albumId)
@@ -37,7 +37,7 @@ export default class App extends Component {
       .catch(() => this.setState({ error: true }));
   };
 
-  // Обновляем количество фотографий в альбоме
+  // обновляем количество фотографий в альбоме
   updateCountPhotos = albumId => {
     this.fakeApiService
       .getCountPhotos(albumId)
@@ -61,8 +61,14 @@ export default class App extends Component {
             alt="Image: cover image"
           />
           <div className="album-info">
-            <span>Альбом: {title}</span>
-            <span>Количество фото: {countPhotos}</span>
+            <span>
+              <strong>Album: </strong>
+              {title}
+            </span>
+            <span>
+              <strong>Count: </strong>
+              {countPhotos}
+            </span>
           </div>
           <div className="button-block">
             <Button text={'Аlbum'} onAction={() => this.openAlbum(id)} />
@@ -88,7 +94,7 @@ export default class App extends Component {
     });
   };
 
-  // функция открытия альбома
+  // функция закрытия альбома
   closeAlbum = () => {
     this.setState({
       photos: null,
@@ -159,17 +165,17 @@ export default class App extends Component {
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>
-        <div className="gallery-grid">{albumItems}</div>
+        <section className="gallery-grid">{albumItems}</section>
         {modal}
       </React.Fragment>
     ) : null;
 
     return (
-      <div className="gallery-container">
+      <section className="gallery-container">
         {albumTiles}
         {album}
         {errorMessage}
-      </div>
+      </section>
     );
   }
 }

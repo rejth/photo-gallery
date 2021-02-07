@@ -12,9 +12,13 @@ export default class GalleryModal extends Component {
   }
 
   handleKeyDown = e => {
-    if (e.keyCode === 27) this.props.closeModal(); // Esc
-    if (e.keyCode === 37 && this.props.hasPrevPhoto) this.props.findPrevPhoto();
-    if (e.keyCode === 39 && this.props.hasNextPhoto) this.props.findNextPhoto();
+    if (e.keyCode === 27) this.props.closeModal();
+    if (e.keyCode === 37 && this.props.hasPrevPhoto) {
+      this.props.findPrevPhoto(e);
+    }
+    if (e.keyCode === 39 && this.props.hasNextPhoto) {
+      this.props.findNextPhoto(e);
+    }
   };
 
   handleClickOutsideModal = e => {

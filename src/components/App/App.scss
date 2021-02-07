@@ -27,7 +27,7 @@ $black: #222;
   }
 }
 
-.gallery-grid div {
+.gallery-grid section {
   position: relative;
 }
 
@@ -75,7 +75,7 @@ $black: #222;
   flex-direction: column;
   margin-top: auto;
   margin-bottom: 18px;
-  font-weight: bold;
+  font-family: helvetica;
   font-size: 16px;
   line-height: 20px;
   color: #fff;

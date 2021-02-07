@@ -21,8 +21,10 @@ class Tiles extends Component {
     const tiles = this.renderImageContent(images);
     return (
       <React.Fragment>
-        <Button text={'Back'} onAction={onClose} />
-        <div className="tiles">{tiles}</div>
+        <div className="back-button">
+          <Button text={'Back'} onAction={onClose} />
+        </div>
+        <section className="tiles">{tiles}</section>
       </React.Fragment>
     );
   }

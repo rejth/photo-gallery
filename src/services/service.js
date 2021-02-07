@@ -32,12 +32,12 @@ export default class FakeApiService {
   // получение всех альбомов конкретного юзера
   async getAllAlbums(userId) {
     const albums = await this.getResource(`/users/${userId}/albums`);
-    const state = await Promise.all(
+    const albumProps = await Promise.all(
       albums.map(
         async (album, index) => await this._transformAlbum(album, index)
       )
     );
-    return state;
+    return albumProps; // [{}, {}...]
   }
 
   // получение всех фотографий конкретного альбома
