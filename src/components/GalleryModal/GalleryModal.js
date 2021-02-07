@@ -13,8 +13,8 @@ export default class GalleryModal extends Component {
 
   handleKeyDown = e => {
     if (e.keyCode === 27) this.props.closeModal();
-    if (e.keyCode === 37 && this.props.hasPrev) this.props.findPrev();
-    if (e.keyCode === 39 && this.props.hasNext) this.props.findNext();
+    if (e.keyCode === 37 && this.props.hasPrevPhoto) this.props.findPrevPhoto();
+    if (e.keyCode === 39 && this.props.hasNextPhoto) this.props.findNextPhoto();
   };
 
   handleClickOutsideModal = e => {
@@ -26,10 +26,10 @@ export default class GalleryModal extends Component {
   render() {
     const {
       closeModal,
-      findPrev,
-      findNext,
-      hasPrev,
-      hasNext,
+      findPrevPhoto,
+      findNextPhoto,
+      hasPrevPhoto,
+      hasNextPhoto,
       src,
     } = this.props;
 
@@ -46,21 +46,21 @@ export default class GalleryModal extends Component {
             >
               &times;
             </a>
-            {hasPrev && (
+            {hasPrevPhoto && (
               <a
                 href="#"
                 className="modal-prev"
-                onClick={findPrev}
+                onClick={findPrevPhoto}
                 onKeyDown={this.handleKeyDown}
               >
                 &lsaquo;
               </a>
             )}
-            {hasNext && (
+            {hasNextPhoto && (
               <a
                 href="#"
                 className="modal-next"
-                onClick={findNext}
+                onClick={findNextPhoto}
                 onKeyDown={this.handleKeyDown}
               >
                 &rsaquo;
@@ -75,9 +75,13 @@ export default class GalleryModal extends Component {
 
 GalleryModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  findPrev: PropTypes.func.isRequired,
-  findNext: PropTypes.func.isRequired,
-  hasPrev: PropTypes.bool.isRequired,
-  hasNext: PropTypes.bool.isRequired,
+  findPrevPhoto: PropTypes.func.isRequired,
+  findNextPhoto: PropTypes.func.isRequired,
+  hasPrevPhoto: PropTypes.bool.isRequired,
+  hasNextPhoto: PropTypes.bool.isRequired,
   src: PropTypes.string,
+};
+
+GalleryModal.defaultProps = {
+  src: 'https://via.placeholder.com/600/92c952',
 };

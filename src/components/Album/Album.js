@@ -5,18 +5,21 @@ import './Album.scss';
 
 export default class Album extends Component {
   render() {
-    return <Tiles images={this.props.data} onClose={this.props.closeAlbum} />;
+    const { data, closeAlbum } = this.props;
+    return <Tiles images={data} onClose={closeAlbum} />;
   }
 }
 
 class Tiles extends Component {
-  renderImageContent = arr => arr.map(src => <Tile image={src} key={src} />);
+  renderImageContent = arr =>
+    arr.map(({ url, id }) => <Tile image={url} key={id} />);
   render() {
-    const images = this.renderImageContent(this.props.images);
+    const { images, onClose } = this.props;
+    const tiles = this.renderImageContent(images);
     return (
       <React.Fragment>
-        <Button text={'Back'} onAction={this.props.onClose} />
-        <div className="tiles">{images}</div>
+        <Button text={'Back'} onAction={onClose} />
+        <div className="tiles">{tiles}</div>
       </React.Fragment>
     );
   }
@@ -24,7 +27,7 @@ class Tiles extends Component {
 
 class Tile extends Component {
   state = {
-    open: false,
+    isOpen: false,
     mouseOver: false,
   };
 
@@ -48,13 +51,13 @@ class Tile extends Component {
 
   clickHandler = e => {
     e.preventDefault();
-    if (this.state.open === false) {
+    if (this.state.isOpen === false) {
       this.setState({
-        open: true,
+        isOpen: true,
       });
     } else {
       this.setState({
-        open: false,
+        isOpen: false,
       });
     }
   };
@@ -64,16 +67,16 @@ class Tile extends Component {
 
     let tileStyle = {};
 
-    if (this.state.open) {
+    if (this.state.isOpen) {
       tileStyle = {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: '62vw',
-        height: '62vw',
+        width: '50vw',
+        height: '50vw',
         margin: '0',
-        marginTop: '-31vw',
-        marginLeft: '-31vw',
+        marginTop: '-25vw',
+        marginLeft: '-25vw',
         boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
         transform: 'none',
       };
@@ -101,14 +104,17 @@ class Tile extends Component {
 Album.propTypes = {
   closeAlbum: PropTypes.func.isRequired,
   data: PropTypes.array,
-  images: PropTypes.array,
 };
 
 Tiles.propTypes = {
   images: PropTypes.array,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 Tile.propTypes = {
   image: PropTypes.string,
+};
+
+Tile.defaultProps = {
+  image: 'https://via.placeholder.com/600/92c952',
 };

@@ -19,5 +19,5 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  text: 'Click me',
+  text: 'Click me!',
 };
