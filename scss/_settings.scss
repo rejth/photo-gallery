@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 20px 0;
+  font-family: helvetica;
+  font-size: 100%;
+  background: #ffd194;
+}
+
+.gallery {
+  margin: auto;
+  max-width: 1440px;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}

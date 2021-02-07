@@ -1,0 +1,1 @@
+.tiles{position:relative;display:grid;grid-template-columns:repeat(3, 1fr);grid-gap:8px;max-width:1200px;width:100%;margin:0 auto}.tile{margin:15px;width:100%;height:100%;overflow:hidden;cursor:pointer}.tile img{width:100%;transition:transform 500ms ease}.tile img:hover{transform:scale(1.1)}.back-button{margin-left:20px}
