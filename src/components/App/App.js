@@ -21,6 +21,7 @@ export default class App extends Component {
 
   fakeApiService = new FakeApiService();
 
+  // Обновляем плитку альбомов
   updateAlbumTiles = () => {
     this.fakeApiService
       .getAllAlbums(this._userId)
@@ -28,6 +29,7 @@ export default class App extends Component {
       .catch(() => this.setState({ error: true }));
   };
 
+  // Обновляем список фотографий альбома
   updatePhotosList = albumId => {
     this.fakeApiService
       .getAllPhotos(albumId)
@@ -35,6 +37,7 @@ export default class App extends Component {
       .catch(() => this.setState({ error: true }));
   };
 
+  // Обновляем количество фотографий в альбоме
   updateCountPhotos = albumId => {
     this.fakeApiService
       .getCountPhotos(albumId)
@@ -46,10 +49,10 @@ export default class App extends Component {
     this.updateAlbumTiles();
   }
 
+  // рендер плитки альбомов
   renderAlbumTiles(tiles) {
     if (tiles) {
-      return tiles.map(({ src, id, title }) => {
-        this.updateCountPhotos(id);
+      return tiles.map(({ src, id, title, countPhotos }) => (
         <div className="album" key={id}>
           <img
             className="cover-image"
@@ -59,22 +62,24 @@ export default class App extends Component {
           />
           <div className="album-info">
             <span>Альбом: {title}</span>
-            <span>Количество фото: {this.state.countPhotos}</span>
+            <span>Количество фото: {countPhotos}</span>
           </div>
           <div className="button-block">
             <Button text={'Аlbum'} onAction={() => this.openAlbum(id)} />
             <Button text={'Preview'} onAction={() => this.openModal(id)} />
           </div>
-        </div>;
-      });
+        </div>
+      ));
     }
   }
 
+  // функция открытия альбома
   openAlbum = id => {
     this.updatePhotosList(id);
     this.setState({ isOpenAlbum: true });
   };
 
+  // функция открытия модального окна
   openModal = id => {
     this.updatePhotosList(id);
     this.setState({
@@ -83,6 +88,7 @@ export default class App extends Component {
     });
   };
 
+  // функция открытия альбома
   closeAlbum = () => {
     this.setState({
       photos: null,
@@ -90,6 +96,7 @@ export default class App extends Component {
     });
   };
 
+  // функция закрытия модального окна
   closeModal = () => {
     this.setState({
       photos: null,
@@ -97,6 +104,7 @@ export default class App extends Component {
     });
   };
 
+  // функция перелистывания фотографий назад
   findPrevPhoto = e => {
     e.preventDefault();
     this.setState(({ currentPhotoId }) => ({
@@ -104,6 +112,7 @@ export default class App extends Component {
     }));
   };
 
+  // функция перелистывания фотографий вперед
   findNextPhoto = e => {
     e.preventDefault();
     this.setState(({ currentPhotoId }) => ({
@@ -121,10 +130,13 @@ export default class App extends Component {
       error,
     } = this.state;
 
+    // сообщение об ошибке
     const errorMessage = error ? <ErrorIndicator /> : null;
 
+    // массив альбомов юзера
     const albumItems = this.renderAlbumTiles(albums);
 
+    // модальное окно с фотографиями
     const modal =
       isOpenModal && photos ? (
         <GalleryModal
@@ -137,11 +149,13 @@ export default class App extends Component {
         />
       ) : null;
 
+    // альбом с фотографиями
     const album =
       isOpenAlbum && photos ? (
         <Album closeAlbum={this.closeAlbum} data={photos} />
       ) : null;
 
+    // плитка со всеми альбомами юзера
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>

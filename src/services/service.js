@@ -1,6 +1,7 @@
 export default class FakeApiService {
   _baseUrl = 'https://jsonplaceholder.typicode.com';
 
+  // обложки для альбомов
   _imgUrls = [
     'https://source.unsplash.com/PC_lbSSxCZE/800x600',
     'https://source.unsplash.com/lVmR1YaBGG4/800x600',
@@ -31,7 +32,12 @@ export default class FakeApiService {
   // получение всех альбомов конкретного юзера
   async getAllAlbums(userId) {
     const albums = await this.getResource(`/users/${userId}/albums`);
-    return albums.map((album, index) => this._transformAlbum(album, index)); // [{}, {}...]
+    const state = await Promise.all(
+      albums.map(
+        async (album, index) => await this._transformAlbum(album, index)
+      )
+    );
+    return state;
   }
 
   // получение всех фотографий конкретного альбома
@@ -47,12 +53,16 @@ export default class FakeApiService {
   }
 
   // добавление обложки альбома
-  _addCoverImg = item => this._imgUrls[item];
+  _addCoverImage = item => this._imgUrls[item];
 
-  _transformAlbum = (album, index) => ({
-    userId: album.userId,
-    id: album.id,
-    title: album.title,
-    src: this._addCoverImg(index),
-  });
+  async _transformAlbum(album, index) {
+    const count = await this.getCountPhotos(album.id);
+    return {
+      userId: album.userId,
+      id: album.id,
+      title: album.title,
+      src: this._addCoverImage(index),
+      countPhotos: count,
+    };
+  }
 }
