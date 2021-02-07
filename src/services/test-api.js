@@ -6,11 +6,6 @@ fetch('https://jsonplaceholder.typicode.com/users/1/albums')
     response.map(album => console.log(album));
   });
 
-// async getAllAlbums(userId) {
-//   const albums = await this.getResource(`users/${userId}/albums`);
-//   return albums.map((album, index) => this._transformAlbum(album, index)); // [{}, {}...]
-// }
-
 const _baseUrl = 'https://jsonplaceholder.typicode.com';
 
 const _imgUrls = [

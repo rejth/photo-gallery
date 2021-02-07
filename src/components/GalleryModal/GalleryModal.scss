@@ -23,6 +23,7 @@ $black: #222;
   top: 0;
   left: 0;
 }
+
 .modal-body a {
   position: absolute;
   display: inline;
@@ -37,11 +38,13 @@ $black: #222;
   width: 40px;
   text-align: center;
 }
+
 .modal-body .modal-close {
   right: 0;
   top: 0;
   border-radius: 0 0 0 5px;
 }
+
 .modal-body .modal-next,
 .modal-body .modal-prev {
   right: 0;
@@ -51,11 +54,13 @@ $black: #222;
   line-height: 40px;
   font-size: 60px;
 }
+
 .modal-body .modal-prev {
   left: 0;
   right: auto;
   border-radius: 0 5px 5px 0;
 }
+
 .modal-body {
   position: relative;
 }
