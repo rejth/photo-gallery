@@ -30,14 +30,14 @@ export default class FakeApiService {
 
   // получение всех альбомов конкретного юзера
   async getAllAlbums(userId) {
-    const albums = await this.getResource(`users/${userId}/albums`);
+    const albums = await this.getResource(`/users/${userId}/albums`);
     return albums.map((album, index) => this._transformAlbum(album, index)); // [{}, {}...]
   }
 
   // получение всех фотографий конкретного альбома
   async getAllPhotos(albumId) {
     const photos = await this.getResource(`/albums/${albumId}/photos`);
-    return photos.json(); // [{}, {}...]
+    return photos; // [{}, {}...]
   }
 
   // добавление обложки альбома

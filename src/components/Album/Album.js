@@ -11,8 +11,11 @@ export default class Album extends Component {
 }
 
 class Tiles extends Component {
-  renderImageContent = arr =>
-    arr.map(({ url, id }) => <Tile image={url} key={id} />);
+  renderImageContent(arr) {
+    if (arr) {
+      return arr.map(({ url, id }) => <Tile image={url} key={id} />);
+    }
+  }
   render() {
     const { images, onClose } = this.props;
     const tiles = this.renderImageContent(images);
@@ -70,12 +73,10 @@ class Tile extends Component {
     if (this.state.isOpen) {
       tileStyle = {
         position: 'absolute',
-        top: '50%',
         left: '50%',
         width: '50vw',
         height: '50vw',
         margin: '0',
-        marginTop: '-25vw',
         marginLeft: '-25vw',
         boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
         transform: 'none',

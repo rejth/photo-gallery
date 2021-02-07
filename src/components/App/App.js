@@ -12,48 +12,57 @@ export default class App extends Component {
     currentAlbumId: null,
     isOpenModal: false,
     isOpenAlbum: false,
-    loading: true,
-    error: false,
+    error: null,
   };
 
   fakeApiService = new FakeApiService();
 
   updateAlbumTiles = () => {
-    const userId = Math.floor(Math.random() * 10);
+    const userId = 1;
     this.fakeApiService
       .getAllAlbums(userId)
-      .then(albums => this.setState({ albums, loading: false }))
-      .catch(() => this.setState({ error: true, loading: false }));
+      .then(albums => this.setState({ albums }))
+      .catch(() => this.setState({ error: true }));
   };
 
-  updatePhotosList = index => {
-    const albumId = index++;
+  updatePhotosList = albumId => {
     this.fakeApiService
       .getAllPhotos(albumId)
-      .then(photos => this.setState({ photos, loading: false }))
-      .catch(() => this.setState({ error: true, loading: false }));
+      .then(photos => this.setState({ photos }))
+      .catch(() => this.setState({ error: true }));
   };
 
   componentDidMount() {
     this.updateAlbumTiles();
   }
 
-  renderAlbumTiles = tile =>
-    tile.map((album, index) => (
-      <div key={index}>
-        <img src={album.src} key={index} />
-        <div className="button-block">
-          <Button text={'Аlbum'} onAction={() => this.openAlbum(index)} />
-          <Button text={'Preview'} onAction={() => this.openAlbum(index)} />
+  renderAlbumTiles(tiles) {
+    if (tiles) {
+      return tiles.map(({ src, id }) => (
+        <div key={id}>
+          <img src={src} key={id} />
+          <div className="button-block">
+            <Button text={'Аlbum'} onAction={() => this.openAlbum(id)} />
+            <Button text={'Preview'} onAction={() => this.openModal(id)} />
+          </div>
         </div>
-      </div>
-    ));
+      ));
+    }
+  }
 
-  openAlbum = index => {
-    this.updatePhotosList(index);
+  openAlbum = id => {
+    this.updatePhotosList(id);
     this.setState({
-      currentAlbumId: index,
+      currentAlbumId: id,
       isOpenAlbum: true,
+    });
+  };
+
+  openModal = id => {
+    this.updatePhotosList(id);
+    this.setState({
+      currentAlbumId: id,
+      isOpenModal: true,
     });
   };
 
@@ -65,25 +74,44 @@ export default class App extends Component {
     });
   };
 
-  findPrevPhoto = () => {
+  closeModal = () => {
+    this.setState({
+      photos: null,
+      currentAlbumId: null,
+      isOpenModal: false,
+    });
+  };
+
+  findPrevPhoto = e => {
+    e.preventDefault();
     this.setState(({ currentAlbumId }) => ({
       currentAlbumId: currentAlbumId - 1,
     }));
   };
 
-  findNextPhoto = () => {
+  findNextPhoto = e => {
+    e.preventDefault();
     this.setState(({ currentAlbumId }) => ({
       currentAlbumId: currentAlbumId + 1,
     }));
   };
 
   render() {
-    const { albums, photos, currentAlbumId } = this.state;
+    const {
+      albums,
+      photos,
+      currentAlbumId,
+      isOpenModal,
+      isOpenAlbum,
+    } = this.state;
+
+    console.log(photos);
+
     const items = this.renderAlbumTiles(albums);
 
-    const modal = this.state.isOpenModal ? (
+    const modal = isOpenModal ? (
       <GalleryModal
-        closeModal={this.closeAlbum}
+        closeModal={this.closeModal}
         findPrevPhoto={this.findPrevPhoto}
         findNextPhoto={this.findNextPhoto}
         hasPrevPhoto={currentAlbumId > 0}
@@ -92,11 +120,11 @@ export default class App extends Component {
       />
     ) : null;
 
-    const album = this.state.isOpenAlbum ? (
+    const album = isOpenAlbum ? (
       <Album closeAlbum={this.closeAlbum} data={photos} />
     ) : null;
 
-    const albumTiles = !this.state.isOpenAlbum ? (
+    const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>
         <div className="gallery-grid">{items}</div>
