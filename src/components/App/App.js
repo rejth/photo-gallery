@@ -40,9 +40,18 @@ export default class App extends Component {
 
   renderAlbumTiles(tiles) {
     if (tiles) {
-      return tiles.map(({ src, id }) => (
-        <div key={id}>
-          <img src={src} key={id} />
+      return tiles.map(({ src, id, title }) => (
+        <div className="album" key={id}>
+          <img
+            className="cover-image"
+            src={src}
+            key={id}
+            alt="Image: cover image"
+          />
+          <div className="album-info">
+            <span>Альбом: {title}</span>
+            <span>Количество фото: 50</span>
+          </div>
           <div className="button-block">
             <Button text={'Аlbum'} onAction={() => this.openAlbum(id)} />
             <Button text={'Preview'} onAction={() => this.openModal(id)} />

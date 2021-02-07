@@ -37,7 +37,7 @@ export default class GalleryModal extends Component {
       <div className="modal-overlay" onClick={this.handleClickOutsideModal}>
         <div className="modal-window">
           <div className="modal-body">
-            <img src={src} />
+            <img src={src} alt="Image: Fake photo" />
             <a
               href="#"
               className="modal-close"

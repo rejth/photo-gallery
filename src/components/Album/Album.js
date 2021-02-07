@@ -74,8 +74,8 @@ class Tile extends Component {
       tileStyle = {
         position: 'absolute',
         left: '50%',
-        width: '50vw',
-        height: '50vw',
+        width: '42vw',
+        height: '42vw',
         margin: '0',
         marginLeft: '-25vw',
         boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
@@ -95,6 +95,7 @@ class Tile extends Component {
           onMouseLeave={this.mouseLeave}
           onClick={this.clickHandler}
           src={image}
+          alt="Image: Fake photo"
           style={tileStyle}
         />
       </div>
