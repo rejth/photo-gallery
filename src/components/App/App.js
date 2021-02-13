@@ -82,7 +82,9 @@ export default class App extends Component {
   // функция открытия альбома
   openAlbum = id => {
     this.updatePhotosList(id);
-    this.setState({ isOpenAlbum: true });
+    this.setState({
+      isOpenAlbum: true,
+    });
   };
 
   // функция открытия модального окна
@@ -94,10 +96,19 @@ export default class App extends Component {
     });
   };
 
+  // функция открытия модального окна внутри альбома
+  openModalInsideAlbum = id => {
+    this.setState({
+      currentPhotoId: id,
+      isOpenModal: true,
+    });
+  };
+
   // функция закрытия альбома
   closeAlbum = () => {
     this.setState({
       photos: null,
+      currentPhotoId: null,
       isOpenAlbum: false,
     });
   };
@@ -105,7 +116,6 @@ export default class App extends Component {
   // функция закрытия модального окна
   closeModal = () => {
     this.setState({
-      photos: null,
       isOpenModal: false,
     });
   };
@@ -124,6 +134,14 @@ export default class App extends Component {
     this.setState(({ currentPhotoId }) => ({
       currentPhotoId: currentPhotoId + 1,
     }));
+  };
+
+  searchPhoto = (arr, index) => {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].id === index) {
+        return arr[i].url;
+      }
+    }
   };
 
   render() {
@@ -151,14 +169,21 @@ export default class App extends Component {
           findNextPhoto={this.findNextPhoto}
           hasPrevPhoto={currentPhotoId > 1}
           hasNextPhoto={currentPhotoId + 1 < photos.length}
-          src={photos[currentPhotoId].url}
+          src={isOpenAlbum ? this.searchPhoto(photos, currentPhotoId) : photos[currentPhotoId].url}
         />
       ) : null;
 
     // альбом с фотографиями
     const album =
       isOpenAlbum && photos ? (
-        <Album closeAlbum={this.closeAlbum} data={photos} />
+        <React.Fragment>
+          <Album
+            closeAlbum={this.closeAlbum}
+            openModal={this.openModalInsideAlbum}
+            data={photos}
+          />
+          {modal}
+        </React.Fragment>
       ) : null;
 
     // плитка со всеми альбомами юзера

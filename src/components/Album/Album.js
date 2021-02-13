@@ -5,15 +5,17 @@ import './Album.scss';
 
 export default class Album extends Component {
   render() {
-    const { data, closeAlbum } = this.props;
-    return <Tiles images={data} onClose={closeAlbum} />;
+    const { data, closeAlbum, openModal } = this.props;
+    return <Tiles images={data} onClose={closeAlbum} onOpen={openModal} />;
   }
 }
 
 class Tiles extends Component {
   renderImageContent(arr) {
     if (arr) {
-      return arr.map(({ url, id }) => <Tile image={url} key={id} />);
+      return arr.map(({ url, id }) => (
+        <Tile image={url} key={id} id={id} onOpen={this.props.onOpen} />
+      ));
     }
   }
   render() {
@@ -32,13 +34,12 @@ class Tiles extends Component {
 
 class Tile extends Component {
   state = {
-    isOpen: false,
     mouseOver: false,
   };
 
   mouseEnter = e => {
     e.preventDefault();
-    if (this.state.mouseOver === false) {
+    if (!this.state.mouseOver) {
       this.setState({
         mouseOver: true,
       });
@@ -47,7 +48,7 @@ class Tile extends Component {
 
   mouseLeave = e => {
     e.preventDefault();
-    if (this.state.mouseOver === true) {
+    if (this.state.mouseOver) {
       this.setState({
         mouseOver: false,
       });
@@ -56,39 +57,11 @@ class Tile extends Component {
 
   clickHandler = e => {
     e.preventDefault();
-    if (this.state.isOpen === false) {
-      this.setState({
-        isOpen: true,
-      });
-    } else {
-      this.setState({
-        isOpen: false,
-      });
-    }
+    this.props.onOpen(this.props.id);
   };
 
   render() {
     const { image } = this.props;
-
-    let tileStyle = {};
-
-    if (this.state.isOpen) {
-      tileStyle = {
-        position: 'absolute',
-        left: '50%',
-        width: '42vw',
-        height: '42vw',
-        margin: '0',
-        marginLeft: '-25vw',
-        boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
-        transform: 'none',
-      };
-    } else {
-      tileStyle = {
-        width: '100%',
-        height: '100%',
-      };
-    }
 
     return (
       <div className="tile">
@@ -98,7 +71,6 @@ class Tile extends Component {
           onClick={this.clickHandler}
           src={image}
           alt="Image: Fake photo"
-          style={tileStyle}
         />
       </div>
     );
@@ -108,15 +80,19 @@ class Tile extends Component {
 Album.propTypes = {
   closeAlbum: PropTypes.func.isRequired,
   data: PropTypes.array,
+  openModal: PropTypes.func.isRequired,
 };
 
 Tiles.propTypes = {
   images: PropTypes.array,
   onClose: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 Tile.propTypes = {
   image: PropTypes.string,
+  onOpen: PropTypes.func.isRequired,
+  id: PropTypes.number,
 };
 
 Tile.defaultProps = {
