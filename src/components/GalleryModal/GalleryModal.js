@@ -32,6 +32,8 @@ export default class GalleryModal extends Component {
       closeModal,
       findPrevPhoto,
       findNextPhoto,
+      hasPrevPhoto,
+      hasNextPhoto,
       src,
     } = this.props;
 
@@ -48,22 +50,26 @@ export default class GalleryModal extends Component {
             >
               &times;
             </a>
-            <a
-              href="#"
-              className="modal-prev"
-              onClick={findPrevPhoto}
-              onKeyDown={this.handleKeyDown}
-            >
-              &lsaquo;
-            </a>
-            <a
-              href="#"
-              className="modal-next"
-              onClick={findNextPhoto}
-              onKeyDown={this.handleKeyDown}
-            >
-              &rsaquo;
-            </a>
+            {hasPrevPhoto && (
+              <a
+                href="#"
+                className="modal-prev"
+                onClick={findPrevPhoto}
+                onKeyDown={this.handleKeyDown}
+              >
+                &lsaquo;
+              </a>
+            )}
+            {hasNextPhoto && (
+              <a
+                href="#"
+                className="modal-next"
+                onClick={findNextPhoto}
+                onKeyDown={this.handleKeyDown}
+              >
+                &rsaquo;
+              </a>
+            )}
           </div>
         </div>
       </div>

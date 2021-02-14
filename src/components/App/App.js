@@ -13,7 +13,7 @@ export default class App extends Component {
     albums: null,
     photos: null,
     countPhotos: null,
-    currentPhotoId: null,
+    currentPhotoIndex: null,
     isOpenModal: false,
     isOpenAlbum: false,
     error: null,
@@ -91,7 +91,7 @@ export default class App extends Component {
   openModal = id => {
     this.updatePhotosList(id);
     this.setState({
-      currentPhotoId: id,
+      currentPhotoIndex: id,
       isOpenModal: true,
     });
   };
@@ -99,7 +99,7 @@ export default class App extends Component {
   // функция открытия модального окна внутри альбома
   openModalInsideAlbum = id => {
     this.setState({
-      currentPhotoId: id,
+      currentPhotoIndex: id,
       isOpenModal: true,
     });
   };
@@ -108,7 +108,7 @@ export default class App extends Component {
   closeAlbum = () => {
     this.setState({
       photos: null,
-      currentPhotoId: null,
+      currentPhotoIndex: null,
       isOpenAlbum: false,
     });
   };
@@ -123,32 +123,24 @@ export default class App extends Component {
   // функция перелистывания фотографий назад
   findPrevPhoto = e => {
     e.preventDefault();
-    this.setState(({ currentPhotoId }) => ({
-      currentPhotoId: currentPhotoId - 1,
+    this.setState(({ currentPhotoIndex }) => ({
+      currentPhotoIndex: currentPhotoIndex - 1,
     }));
   };
 
   // функция перелистывания фотографий вперед
   findNextPhoto = e => {
     e.preventDefault();
-    this.setState(({ currentPhotoId }) => ({
-      currentPhotoId: currentPhotoId + 1,
+    this.setState(({ currentPhotoIndex }) => ({
+      currentPhotoIndex: currentPhotoIndex + 1,
     }));
-  };
-
-  searchPhoto = (arr, index) => {
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].id === index) {
-        return arr[i].url;
-      }
-    }
   };
 
   render() {
     const {
       albums,
       photos,
-      currentPhotoId,
+      currentPhotoIndex,
       isOpenModal,
       isOpenAlbum,
       error,
@@ -157,23 +149,23 @@ export default class App extends Component {
     // сообщение об ошибке
     const errorMessage = error ? <ErrorIndicator /> : null;
 
-    // массив альбомов юзера
+    // массив всех альбомов пользователя
     const albumItems = this.renderAlbumTiles(albums);
 
-    // модальное окно с фотографиями
+    // модальное окно со всеми фотографиями альбома
     const modal =
       isOpenModal && photos ? (
         <GalleryModal
           closeModal={this.closeModal}
           findPrevPhoto={this.findPrevPhoto}
           findNextPhoto={this.findNextPhoto}
-          hasPrevPhoto={currentPhotoId > 1}
-          hasNextPhoto={currentPhotoId + 1 < photos.length}
-          src={isOpenAlbum ? this.searchPhoto(photos, currentPhotoId) : photos[currentPhotoId].url}
+          hasPrevPhoto={currentPhotoIndex > 1}
+          hasNextPhoto={currentPhotoIndex + 1 < photos.length}
+          src={photos[currentPhotoIndex].url}
         />
       ) : null;
 
-    // альбом с фотографиями
+    // содержимое альбома со всеми фотографиями
     const album =
       isOpenAlbum && photos ? (
         <React.Fragment>
@@ -186,7 +178,7 @@ export default class App extends Component {
         </React.Fragment>
       ) : null;
 
-    // плитка со всеми альбомами юзера
+    // плитка со всеми альбомами пользователя
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>

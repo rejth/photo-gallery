@@ -10,11 +10,12 @@ export default class Album extends Component {
   }
 }
 
+// плитка фотографий + кнопка "Back"
 class Tiles extends Component {
   renderImageContent(arr) {
     if (arr) {
-      return arr.map(({ url, id }) => (
-        <Tile image={url} key={id} id={id} onOpen={this.props.onOpen} />
+      return arr.map(({ url, id }, index) => (
+        <Tile image={url} key={id} id={index} onOpen={this.props.onOpen} />
       ));
     }
   }
@@ -32,6 +33,7 @@ class Tiles extends Component {
   }
 }
 
+// фотография
 class Tile extends Component {
   state = {
     mouseOver: false,
