@@ -19,6 +19,7 @@ $black: #222;
   transform: translate3d(-50%, -50%, 0);
   img {
     width: 100%;
+    object-fit: cover;
     border: 5px solid #fff;
   }
 }

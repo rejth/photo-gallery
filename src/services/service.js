@@ -29,7 +29,7 @@ export default class FakeApiService {
     return body;
   }
 
-  // получение всех альбомов конкретного юзера
+  // получение всех альбомов конкретного пользователя
   async getAllAlbums(userId) {
     const albums = await this.getResource(`/users/${userId}/albums`);
     const albumProps = await Promise.all(
