@@ -49,7 +49,7 @@ export default class App extends Component {
     this.updateAlbumTiles();
   }
 
-  // рендер плитки альбомов
+  // рендер сетки альбомов
   renderAlbumTiles(tiles) {
     if (tiles) {
       return tiles.map(({ src, id, title, countPhotos }) => (
@@ -178,7 +178,7 @@ export default class App extends Component {
         </React.Fragment>
       ) : null;
 
-    // плитка со всеми альбомами пользователя
+    // сетка со всеми альбомами пользователя
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>

@@ -10,7 +10,7 @@ export default class Album extends Component {
   }
 }
 
-// плитка фотографий + кнопка "Back"
+// сетка фотографий + кнопка "Back"
 class Tiles extends Component {
   renderImageContent(arr) {
     if (arr) {

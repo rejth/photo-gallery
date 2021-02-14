@@ -1,15 +1,18 @@
 $black: #222;
+$white: #fff;
 
+// Главный контейнер
 .gallery-container h1 {
   margin: 2rem 0;
   padding: 0;
   text-align: center;
-  color: #fff;
+  color: $white;
   text-transform: uppercase;
   font-size: 6.5vw;
   font-weight: lighter;
 }
 
+// Сетка с содержимым галереи
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -18,8 +21,7 @@ $black: #222;
   margin: 0 auto;
   img {
     width: 100%;
-    object-fit: cover;
-    border: 5px solid #fff;
+    border: 5px solid $white;
   }
 }
 
@@ -27,6 +29,7 @@ $black: #222;
   position: relative;
 }
 
+// Альбом
 .album {
   position: relative;
   display: flex;
@@ -54,6 +57,7 @@ $black: #222;
   }
 }
 
+// Обложка альбома
 .cover-image {
   position: absolute;
   top: 0;
@@ -66,6 +70,7 @@ $black: #222;
   object-fit: cover;
 }
 
+// Информация об альбоме
 .album-info {
   display: flex;
   flex-direction: column;
@@ -74,16 +79,18 @@ $black: #222;
   font-family: helvetica;
   font-size: 16px;
   line-height: 20px;
-  color: #fff;
+  color: $white;
   z-index: 2;
 }
 
+// Блок с кнопками
 .button-block {
   display: flex;
   justify-content: space-between;
   z-index: 2;
 }
 
+// Медиа-запросы
 @media (max-width: 1200px) {
   .gallery {
     max-width: 960px;

@@ -1,15 +1,19 @@
 $black: #222;
+$white: #fff;
+$image-cover-color: rgba(0, 0, 0, 0.5);
 
+// Подложка
 .modal-overlay {
   position: fixed;
   z-index: 100;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $image-cover-color;
   top: 0;
   left: 0;
 }
 
+// Pop-up окно
 .modal-window {
   position: fixed;
   z-index: 999;
@@ -19,8 +23,7 @@ $black: #222;
   transform: translate3d(-50%, -50%, 0);
   img {
     width: 100%;
-    object-fit: cover;
-    border: 5px solid #fff;
+    border: 5px solid $white;
   }
 }
 
@@ -28,6 +31,7 @@ $black: #222;
   position: relative;
 }
 
+// Кнопки
 .modal-body a {
   position: absolute;
   display: inline;
@@ -36,19 +40,21 @@ $black: #222;
   line-height: 36px;
   font-size: 30px;
   font-weight: lighter;
-  background: #fff;
+  background: $white;
   border-radius: 5px;
   height: 40px;
   width: 40px;
   text-align: center;
 }
 
+// Кнопка "Закрыть"
 .modal-body .modal-close {
   right: 0;
   top: 0;
   border-radius: 0 0 0 5px;
 }
 
+// Кнопки "Вперед", "Назад"
 .modal-body .modal-next,
 .modal-body .modal-prev {
   right: 0;
@@ -59,6 +65,7 @@ $black: #222;
   font-size: 60px;
 }
 
+// Кнопка "Назад"
 .modal-body .modal-prev {
   left: 0;
   right: auto;
