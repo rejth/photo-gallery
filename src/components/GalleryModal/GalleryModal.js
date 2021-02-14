@@ -13,12 +13,6 @@ export default class GalleryModal extends Component {
 
   handleKeyDown = e => {
     if (e.keyCode === 27) this.props.closeModal();
-    if (e.keyCode === 37 && this.props.hasPrevPhoto) {
-      this.props.findPrevPhoto(e);
-    }
-    if (e.keyCode === 39 && this.props.hasNextPhoto) {
-      this.props.findNextPhoto(e);
-    }
   };
 
   handleClickOutsideModal = e => {
@@ -55,7 +49,6 @@ export default class GalleryModal extends Component {
                 href="#"
                 className="modal-prev"
                 onClick={findPrevPhoto}
-                onKeyDown={this.handleKeyDown}
               >
                 &lsaquo;
               </a>
@@ -65,7 +58,6 @@ export default class GalleryModal extends Component {
                 href="#"
                 className="modal-next"
                 onClick={findNextPhoto}
-                onKeyDown={this.handleKeyDown}
               >
                 &rsaquo;
               </a>

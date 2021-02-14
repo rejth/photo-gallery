@@ -49,7 +49,7 @@ export default class App extends Component {
     this.updateAlbumTiles();
   }
 
-  // рендер плитки альбомов
+  // рендер сетки альбомов
   renderAlbumTiles(tiles) {
     if (tiles) {
       return tiles.map(({ src, id, title, countPhotos }) => (
@@ -82,7 +82,9 @@ export default class App extends Component {
   // функция открытия альбома
   openAlbum = id => {
     this.updatePhotosList(id);
-    this.setState({ isOpenAlbum: true });
+    this.setState({
+      isOpenAlbum: true,
+    });
   };
 
   // функция открытия модального окна
@@ -94,10 +96,19 @@ export default class App extends Component {
     });
   };
 
+  // функция открытия модального окна внутри альбома
+  openModalInsideAlbum = id => {
+    this.setState({
+      currentPhotoIndex: id,
+      isOpenModal: true,
+    });
+  };
+
   // функция закрытия альбома
   closeAlbum = () => {
     this.setState({
       photos: null,
+      currentPhotoIndex: null,
       isOpenAlbum: false,
     });
   };
@@ -105,7 +116,6 @@ export default class App extends Component {
   // функция закрытия модального окна
   closeModal = () => {
     this.setState({
-      photos: null,
       isOpenModal: false,
     });
   };
@@ -149,7 +159,7 @@ export default class App extends Component {
           closeModal={this.closeModal}
           findPrevPhoto={this.findPrevPhoto}
           findNextPhoto={this.findNextPhoto}
-          hasPrevPhoto={currentPhotoIndex > 1}
+          hasPrevPhoto={currentPhotoIndex > 0}
           hasNextPhoto={currentPhotoIndex + 1 < photos.length}
           src={photos[currentPhotoIndex].url}
         />
@@ -158,10 +168,17 @@ export default class App extends Component {
     // содержимое альбома со всеми фотографиями
     const album =
       isOpenAlbum && photos ? (
-        <Album closeAlbum={this.closeAlbum} data={photos} />
+        <React.Fragment>
+          <Album
+            closeAlbum={this.closeAlbum}
+            openModal={this.openModalInsideAlbum}
+            data={photos}
+          />
+          {modal}
+        </React.Fragment>
       ) : null;
 
-    // плитка со всеми альбомами пользователя
+    // сетка со всеми альбомами пользователя
     const albumTiles = !isOpenAlbum ? (
       <React.Fragment>
         <h1>Photo Gallery</h1>
