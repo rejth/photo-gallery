@@ -159,7 +159,7 @@ export default class App extends Component {
           closeModal={this.closeModal}
           findPrevPhoto={this.findPrevPhoto}
           findNextPhoto={this.findNextPhoto}
-          hasPrevPhoto={currentPhotoIndex > 1}
+          hasPrevPhoto={currentPhotoIndex > 0}
           hasNextPhoto={currentPhotoIndex + 1 < photos.length}
           src={photos[currentPhotoIndex].url}
         />
