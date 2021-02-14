@@ -83,6 +83,7 @@ GalleryModal.propTypes = {
   findNextPhoto: PropTypes.func.isRequired,
   hasPrevPhoto: PropTypes.bool.isRequired,
   hasNextPhoto: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   src: PropTypes.string,
 };
 

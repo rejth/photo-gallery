@@ -14,6 +14,7 @@
   cursor: pointer;
   img {
     width: 100%;
+    object-fit: cover;
     transition: transform 500ms ease;
     &:hover {
       transform: scale(1.1);

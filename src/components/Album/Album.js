@@ -10,6 +10,7 @@ export default class Album extends Component {
   }
 }
 
+// плитка фотографий + кнопка "Back"
 class Tiles extends Component {
   renderImageContent(arr) {
     if (arr) {
@@ -30,6 +31,7 @@ class Tiles extends Component {
   }
 }
 
+// фотография
 class Tile extends Component {
   state = {
     isOpen: false,
@@ -38,7 +40,7 @@ class Tile extends Component {
 
   mouseEnter = e => {
     e.preventDefault();
-    if (this.state.mouseOver === false) {
+    if (!this.state.mouseOver) {
       this.setState({
         mouseOver: true,
       });
@@ -47,7 +49,7 @@ class Tile extends Component {
 
   mouseLeave = e => {
     e.preventDefault();
-    if (this.state.mouseOver === true) {
+    if (this.state.mouseOver) {
       this.setState({
         mouseOver: false,
       });
@@ -56,7 +58,7 @@ class Tile extends Component {
 
   clickHandler = e => {
     e.preventDefault();
-    if (this.state.isOpen === false) {
+    if (!this.state.isOpen) {
       this.setState({
         isOpen: true,
       });
@@ -68,16 +70,18 @@ class Tile extends Component {
   };
 
   render() {
+    // url
     const { image } = this.props;
 
+    // стили при нажатии на фотографию
     let tileStyle = {};
 
-    if (this.state.isOpen) {
+    if (this.state.isOpen && document.documentElement.clientWidth > 780) {
       tileStyle = {
         position: 'absolute',
         left: '50%',
-        width: '42vw',
-        height: '42vw',
+        width: '50vw',
+        height: '40vw',
         margin: '0',
         marginLeft: '-25vw',
         boxShadow: '0 0 40px 5px rgba(0, 0, 0, 0.3)',
