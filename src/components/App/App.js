@@ -114,7 +114,8 @@ export default class App extends Component {
   };
 
   // функция закрытия модального окна
-  closeModal = () => {
+  closeModal = e => {
+    e.preventDefault();
     this.setState({
       isOpenModal: false,
     });

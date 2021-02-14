@@ -12,12 +12,12 @@ export default class GalleryModal extends Component {
   }
 
   handleKeyDown = e => {
-    if (e.keyCode === 27) this.props.closeModal();
+    if (e.keyCode === 27) this.props.closeModal(e);
   };
 
   handleClickOutsideModal = e => {
     if (e.target.matches('.modal-overlay')) {
-      this.props.closeModal();
+      this.props.closeModal(e);
     }
   };
 
@@ -39,7 +39,7 @@ export default class GalleryModal extends Component {
             <a
               href="#"
               className="modal-close"
-              onClick={closeModal}
+              onClick={e => closeModal(e)}
               onKeyDown={this.handleKeyDown}
             >
               &times;
