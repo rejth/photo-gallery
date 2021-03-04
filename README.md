@@ -1,3 +1,3 @@
-# Photo Gallery React App
+# Photo Gallery
 
-Приложение "Photo Gallery" на React
+Приложение "Photo Gallery" на React + JSON Placeholder API
